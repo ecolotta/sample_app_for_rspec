@@ -1,9 +1,13 @@
 FactoryBot.define do
   factory :task do
-    sequence(:title, "title_1")
-    content { "content" }
+    sequence(:title) { |n| "test#{n}" }
+    content { "test" }
     status { :todo }
-    deadline { 1.week.from_now }
     association :user
+    Task.statuses.keys.each do |status|
+      trait :"#{status}" do
+        status { status }
+      end
+    end
   end
 end
